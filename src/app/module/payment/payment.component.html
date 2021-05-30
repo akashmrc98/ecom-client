@@ -1,0 +1,35 @@
+<app-taskbar></app-taskbar>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!isLoading" class="content card-sm shadow-sm bw-radius-m">
+    <div class="info shadow-sm bw-radius-sm">
+        <h4>Hi {{username}},</h4>
+        <h3>Thank you for purchasing products.</h3>
+        <button mat-raised-button color="primary" [routerLink]="['/', 'products']">See more products</button>
+    </div>
+
+    <div class="success">
+        <img src="../../../assets/message/undraw_Successful_purchase_re_mpig.svg">
+    </div>
+
+
+    <div class="info shadow-sm bw-radius-sm">
+        <div>
+            <h4>Purchase Details</h4>
+            <h3>Purchased on {{purchase.purchasedAt | date}}</h3>
+            <h3>Amount Paid {{ purchase.totalPrice }} ₹ </h3>
+        </div>
+        <div>
+            <h4>We hope you enjoy the premium experience.
+                Thank you for supporting us, your contribution is a big deal to company
+            </h4>
+            <h3>Happy Invoicing!</h3>
+            <button mat-raised-button color="accent">Download Invoice!</button>
+        </div>
+        <div>
+            <h4>Contact if you have any queries.</h4>
+            <h3> MetroStopper.</h3>
+        </div>
+    </div>
+</div>

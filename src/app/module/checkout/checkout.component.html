@@ -1,0 +1,30 @@
+<app-taskbar></app-taskbar>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!isLoading" class="shadow-sm card-sm box-sm bw-radius-m">
+    <h3>Choose Address</h3>
+    <mat-radio-group [(ngModel)]="addressId" *ngFor="let address of addresses">
+        <div class="shadow-sm card-sm box-sm bw-radius-m grid">
+            <mat-radio-button class="address-radio" [value]="address.id">{{address.addressType}}</mat-radio-button>
+            <button (click)="showAddressDialog(address.id)" mat-mini-fab>
+                <mat-icon>list</mat-icon>
+            </button>
+        </div>
+    </mat-radio-group>
+
+
+    <mat-radio-group [(ngModel)]="paymentMethod" class="payment">
+        <h3>Choose Payment Method</h3>
+        <mat-radio-button class="shadow-sm card-sm box bw-radius-m" value="NET BANKING">Internet Banking
+        </mat-radio-button>
+        <mat-radio-button class="shadow-sm card-sm box bw-radius-m" value="CARD">Debit/Credit Card</mat-radio-button>
+        <mat-radio-button class="shadow-sm card-sm box bw-radius-m" value="COD">COD</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="container">
+        <button mat-raised-button (click)="confirmDialog()" class="cta" color="primary">Place Order</button>
+    </div>
+
+
+</div>

@@ -1,0 +1,54 @@
+<app-taskbar></app-taskbar>
+
+<div *ngFor="let address of addresses" class="card box">
+    <table class="shadow-sm box bw-radius-m">
+        <tr class="title">
+            <h3> {{address.addressType}} Address </h3>
+        </tr>
+        <tr>
+            <p>Name</p>
+            <p> {{address.fullName}} </p>
+        </tr>
+
+        <tr>
+            <p>Phone</p>
+            <p> {{address.phone}} </p>
+        </tr>
+
+        <tr>
+            <p>First Line</p>
+            <p> {{address.firstLine}} </p>
+        </tr>
+
+        <tr>
+            <p>Second Line</p>
+            <p> {{address.secondLine}} </p>
+        </tr>
+
+        <tr>
+            <p>Zip</p>
+            <p> {{address.zip}} </p>
+        </tr>
+
+        <tr>
+            <p>City</p>
+            <p> {{address.city}} </p>
+        </tr>
+
+        <tr>
+            <p>State</p>
+            <p> {{address.state}} </p>
+        </tr>
+
+        <tr class="buttons-group">
+            <button mat-mini-fab color="accent">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-mini-fab color="warn">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </tr>
+    </table>
+
+</div>

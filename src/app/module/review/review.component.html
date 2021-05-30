@@ -1,0 +1,65 @@
+<div *ngIf="reviews.length !== 0" class="shadow-m bw-radius-m box card customer-reviews">
+    <div class="customer-ratings">
+        <h2> Customer Reviews </h2>
+        <div class="ratings">
+            <app-rating [ratings]="averageRatings()"></app-rating>
+            <h4>
+                {{averageRatings()}} out of 5.0
+            </h4>
+        </div>
+        <h4> {{totalReviews}} reviews </h4>
+    </div>
+
+    <div class="progress">
+        <div>5 Star</div>
+        <mat-progress-bar mode="determinate" [value]="findPercentageOfReviews(5)"></mat-progress-bar>
+        <div> {{findPercentageOfReviews(5)}}% </div>
+    </div>
+
+    <div class="progress">
+        <div>4 Star</div>
+        <mat-progress-bar mode="determinate" [value]="findPercentageOfReviews(4)"></mat-progress-bar>
+        <div> {{findPercentageOfReviews(4)}}% </div>
+    </div>
+
+    <div class="progress">
+        <div>3 Star</div>
+        <mat-progress-bar mode="determinate" [value]="findPercentageOfReviews(3)"></mat-progress-bar>
+        <div> {{findPercentageOfReviews(3)}}% </div>
+    </div>
+
+    <div class="progress">
+        <div>2 Star</div>
+        <mat-progress-bar mode="determinate" [value]="findPercentageOfReviews(2)"></mat-progress-bar>
+        <div> {{findPercentageOfReviews(2)}}% </div>
+    </div>
+
+    <div class="progress">
+        <div>1 Star</div>
+        <mat-progress-bar mode="determinate" [value]="findPercentageOfReviews(1)"></mat-progress-bar>
+        <div> {{findPercentageOfReviews(1)}}% </div>
+    </div>
+</div>
+
+<div *ngIf="reviews.length !== 0" class="shadow-m bw-radius-m reviews">
+
+    <div *ngFor="let review of reviews">
+
+        <div class="review">
+
+            <app-rating [ratings]="review.rating"></app-rating>
+
+            <h3> {{review.username}} | <span class="verify">verified user</span> </h3>
+            <h4>{{review.headLine}}</h4>
+            <h5>reviewed on {{review.reviewedOn | date}}</h5>
+            <p>{{review.description}}</p>
+
+            <div class="buttons-group">
+                <button (click)="likeReview(review.id)" mat-icon-button>
+                    <mat-icon>thumb_up</mat-icon>
+                </button>
+                <h5> {{review | json}} </h5>
+            </div>
+        </div>
+    </div>
+</div>

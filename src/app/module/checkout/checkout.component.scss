@@ -1,0 +1,29 @@
+.container {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    column-gap: 5%;
+}
+
+.address-radio {
+    margin: 0.5rem 0;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 85% 15%;
+}
+
+mat-radio-group{
+    display: grid;
+}
+
+.payment{
+    display: grid;
+    width: 100%;
+}
+
+.cta{
+    font-size: 2rem;
+    padding:1rem;
+}

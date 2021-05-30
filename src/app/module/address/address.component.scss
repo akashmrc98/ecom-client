@@ -1,0 +1,24 @@
+tr :nth-child(even) {
+    border-radius: 2vw;
+}
+
+tr :nth-child(odd) {
+    font-size: 1.15;
+    font-weight: bold;
+}
+
+.buttons-group {
+    margin: 1rem 0;
+    display: flex;
+    column-gap: 4%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    display: grid;
+    width: 100%;
+}

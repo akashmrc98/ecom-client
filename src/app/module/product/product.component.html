@@ -1,0 +1,50 @@
+<app-taskbar></app-taskbar>
+
+<mat-spinner color="accent" *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!isLoading" class="product card shadow-sm bw-radius-m">
+
+    <div class="images">
+        <img [src]="image" alt="">
+        <div class="dots">
+            <div *ngFor="let item of product.images; let i = index;">
+                <button mat-icon-button>
+                    <mat-icon (click)="getImage(i)" color="primary">circle</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="product.stock !== 0" class="buttons-group">
+            <button (click)="addToCart(product.id)" color="primary" mat-raised-button>
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
+
+            <button (click)="addToWishList(product.id)" color="accent" mat-raised-button>
+                <mat-icon>favorite</mat-icon>
+            </button>
+        </div>
+
+        <div class="specs">
+            <div class="brand"> {{product.brand}} </div>
+            <div class="price"> {{product.price}} ₹ only</div>
+            <div class="stock">
+                <div *ngIf="product.stock !== 0">
+                    {{product.stock}} left in stock
+                </div>
+                <div class="warning" *ngIf="product.stock === 0">
+                    out of stock
+                </div>
+            </div>
+            <div class="description"> {{product.description}} </div>
+            <div class="config">
+                <div *ngFor="let spec of product.specifications">
+                    <div class="spec-config">
+                        <li>{{spec}}</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-review [totalReviews]="product.reviews.length" [reviews]="product.reviews"></app-review>

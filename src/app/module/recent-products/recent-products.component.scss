@@ -1,0 +1,22 @@
+.recent-products {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vh;
+    box-shadow: 0px 5px 30px rgba($color: #325288, $alpha: 0.15);
+    margin: 1em;
+
+    h2 {
+        padding: 1em 0 0 1em;
+    }
+}
+
+.button-group {
+    display: flex;
+    column-gap: 3%;
+}
+
+table {
+    width: 100%;
+    box-shadow: none;
+    text-align: left;
+}

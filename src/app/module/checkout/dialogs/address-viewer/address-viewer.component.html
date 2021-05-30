@@ -1,0 +1,50 @@
+<mat-dialog-content>
+    <h3>{{data.address.addressType}} Address</h3>
+    <table>
+        <tr>
+            <p>Name</p>
+            <p> {{data.address.fullName}} </p>
+        </tr>
+
+        <tr>
+            <p>Phone</p>
+            <p> {{data.address.phone}} </p>
+        </tr>
+
+        <tr>
+            <p>Line 1</p>
+            <p> {{data.address.firstLine}} </p>
+        </tr>
+
+        <tr>
+            <p>Line 2</p>
+            <p> {{data.address.secondLine}} </p>
+        </tr>
+
+        <tr>
+            <p>Zip</p>
+            <p> {{data.address.zip}} </p>
+        </tr>
+
+        <tr>
+            <p>City</p>
+            <p> {{data.address.city}} </p>
+        </tr>
+
+        <tr>
+            <p>State</p>
+            <p> {{data.address.state}} </p>
+        </tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+
+    <button mat-raised-button [mat-dialog-close]="true" mat-dialog-close>
+        edit
+    </button>
+
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
+        close
+    </button>
+</mat-dialog-actions>

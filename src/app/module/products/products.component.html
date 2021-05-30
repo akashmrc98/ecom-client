@@ -1,0 +1,40 @@
+<app-taskbar></app-taskbar>
+
+<mat-spinner color="warn" *ngIf="isLoading"></mat-spinner>
+
+<div class="products" *ngIf="!isLoading">
+    <div *ngFor="let product of products">
+        <div class="product shadow-m bw-radius-m">
+
+            <div *ngIf="product.reviews.length !== 0" class="ratings">
+                <app-rating [ratings]="getAverageRatings(product.reviews)"></app-rating>
+                <div class="stat">( {{product.reviews.length}} reviews )</div>
+            </div>
+
+            <div class="product-image" (click)="viewProduct(product.id)">
+                <img [src]="getImage(product)">
+            </div>
+
+            <div class="cta-buttons">
+                <button (click)="addToCart(product.id)" mat-raised-button color="primary">
+                    <mat-icon>shopping_cart</mat-icon>
+                </button>
+                <button (click)="addToWishList(product.id)" mat-raised-button color="accent">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+            </div>
+
+            <div class="specs">
+                <div class="brand"> {{product.brand}} </div>
+                <div class="price"> {{product.price}} ₹ only</div>
+                <div *ngIf="product.stock!==0">
+                    <div class="stock"> {{product.stock}} only left</div>
+                </div>
+                <div *ngIf="product.stock===0">
+                    <div class="error"> Out of stock</div>
+                </div>
+                <div class="description"> {{product.description.substr(0, 120) }}...</div>
+            </div>
+        </div>
+    </div>
+</div>

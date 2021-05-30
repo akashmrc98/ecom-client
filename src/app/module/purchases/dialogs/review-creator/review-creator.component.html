@@ -1,0 +1,30 @@
+<div mat-dialog-title>
+    <h4>Review Product</h4>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="reviewForm">
+        <mat-form-field appearance="outline">
+            <mat-label>HeadLine</mat-label>
+            <input matInput formControlName="headLine">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput rows="4" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-label>Rate this product</mat-label>
+        <div class="icons">
+            <span *ngFor="let star of stars; let i = index">
+                <mat-icon (click)="rateProduct(i)"> {{star}} </mat-icon>
+            </span>
+
+            <span> {{ratings}} </span>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close]="true">Close</button>
+    <button mat-raised-button (click)="submitReview()" cdkFocusInitial>Submit Review</button>
+</mat-dialog-actions>

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="user-form">
+        <form [formGroup]="userForm" class="form-elements">
+            <ng-template matStepLabel>User</ng-template>
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" formControlName="phone">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" formControlName="username">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>User Type</mat-label>
+                <mat-select formControlName="userRole">
+                    <mat-option value="VENDOR">Vendor</mat-option>
+                    <mat-option value="USER">User</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+        </form>
+        <div class="button-grouper">
+            <button mat-raised-button color="primary" (click)="createUser()">
+                <span>Sign Up</span>
+                <mat-icon>person_add</mat-icon>
+            </button>
+
+            <button mat-raised-button [routerLink]="['/','login']">
+                <span>Sign In</span>
+                <mat-icon>login</mat-icon>
+            </button>
+        </div>
+    </div>

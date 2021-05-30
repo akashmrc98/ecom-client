@@ -1,0 +1,50 @@
+.cart-spec {
+    display: grid;
+    grid-template-columns: 75% 25%;
+}
+
+.products {
+    display: grid;
+    height: auto;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .image {
+        img {
+            height: auto;
+            width: 100%;
+        }
+    }
+}
+
+.buttons-group {
+    padding: 1em 0;
+    display: flex;
+    column-gap: 4%;
+    justify-content: flex-start;
+}
+
+.counter {
+    padding: 0.2em 1.5em;
+    background-color: #325288;
+    color: aliceblue;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.specs {
+    .price {
+        font-size: 1.25em;
+        font-weight: bold;
+    }
+    .description {
+        font-size: 0.8em;
+    }
+    .brand {
+        font-size: 1.25em;
+        font-weight: 550;
+    }
+}

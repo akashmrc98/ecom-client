@@ -1,0 +1,47 @@
+<app-taskbar></app-taskbar>
+
+<div class="box card shadow-m bw-radius-m">
+    <form [formGroup]="addressForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="fullName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Address Type</mat-label>
+            <input matInput formControlName="addressType">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>First Line</mat-label>
+            <input matInput formControlName="firstLine">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Second Line</mat-label>
+            <input matInput formControlName="secondLine">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Zip</mat-label>
+            <input matInput formControlName="zip">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state">
+        </mat-form-field>
+    </form>
+
+    <div class="buttons-group">
+        <button mat-mini-fab color="primary" (click)="confirmDialog()">
+            <mat-icon>save</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" [routerLink]="['/', 'address', username]">
+            <mat-icon>list</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="taskbar" color="primary">
+
+    <div *ngIf="showNav" [class]="'side-navigation animate__animated animate__faster '+navAnimation">
+        <div class="content">
+            <form>
+                <mat-form-field appearance="outline">
+                    <mat-label>Search</mat-label>
+                    <input type="text" placeholder="Search" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <button mat-icon-button matSuffix>
+                        <mat-icon color="primary">search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </form>
+
+            <div class="content-items">
+                <ul>
+                    <li [routerLink]="['/', 'products']"><button mat-flat-button>Trending</button></li>
+                    <li><button mat-flat-button>Shop by Category</button></li>
+                    <mat-divider></mat-divider>
+                    <li [routerLink]="['/', 'purchases', username]"><button mat-flat-button>Purchases</button></li>
+                    <li [routerLink]="['/', 'cart', cartId]"><button mat-flat-button>Cart</button></li>
+                    <li [routerLink]="['/', 'wishlist', wishListId]"><button mat-flat-button>WishList</button></li>
+                    <li [routerLink]="['/', 'account', username]"><button mat-flat-button>Account</button></li>
+                    <mat-divider></mat-divider>
+                    <li><button (click)="logOut()" mat-flat-button>Logout</button></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="items">
+        <button (click)="toggleNavigation()" mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span> METEROSTOPPER </span>
+        <div class="buttons-group">
+
+            <button [routerLink]="['/', 'cart', cartId]" mat-icon-button>
+                <mat-icon [matBadge]="noOfProductsInCart" matBadgeColor="warn" color="primary">
+                    shopping_cart
+                </mat-icon>
+            </button>
+
+            <button [routerLink]="['/', 'wishlist', wishListId]" mat-icon-button>
+                <mat-icon [matBadge]="noOfProductsInWishList" matBadgeColor="warn" color="accent">favorite</mat-icon>
+            </button>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+.user-form {
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0px 5px 30px rgba($color: #325288, $alpha: 0.15);
+    border-radius: 2vw;
+}
+
+.form-elements {
+    display: grid;
+}
+
+.button-grouper {
+    display: flex;
+    column-gap: 2%;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    width: 50%;
+    height: 3.25em;
+    align-self: flex-start;
+    margin-bottom: 0.75em;
+}
+
+@media only screen and (min-width: 1366px) {
+    .container {
+        margin: 3em 40em;
+    }
+
+    .user-form {
+        border-radius: 1vh;
+    }
+}

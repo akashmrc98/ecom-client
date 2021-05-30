@@ -1,0 +1,112 @@
+<app-taskbar></app-taskbar>
+
+<form [formGroup]="productForm" class="product-form">
+    <mat-form-field appearance="outline">
+        <mat-label>Manufactured on</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="4" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Brand</mat-label>
+        <input matInput formControlName="brand">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+            <mat-option *ngFor="let item of categoryList" [value]="item">
+                {{item}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Stock</mat-label>
+        <input matInput formControlName="stock">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price">
+    </mat-form-field>
+
+    <div class="save-product">
+        <button (click)="onSave()" mat-raised-button color="primary">
+            <span>Save</span>
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+</form>
+
+
+<div class="specifications">
+    <form class="specification-form">
+        <mat-form-field appearance="outline">
+            <mat-label>Specification</mat-label>
+            <input matInput [(ngModel)]="spec" name="spec">
+        </mat-form-field>
+        <div class="button">
+            <button (click)="addSpec()" mat-mini-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </form>
+
+    <div class="specification scroller">
+        <div *ngFor="let item of specs; let i = index">
+            <mat-list>
+                <mat-list-item>
+                    <div class="item-grid">
+                        <div class="button">
+                            <button (click)="removeSpec(i)" mat-mini-fab color="primary">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        <div class="item-name">
+                            {{item.substr(0, 22)}}...
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+            <mat-divider></mat-divider>
+        </div>
+
+    </div>
+
+</div>
+
+
+<form class="image-form" enctype="multipart/form-data">
+    <mat-form-field appearance="outline">
+        <mat-label>Upload Image</mat-label>
+        <ngx-mat-file-input name="file" (change)="handleFileInput($event)">
+        </ngx-mat-file-input>
+        <mat-icon color="primary" matSuffix>folder</mat-icon>
+    </mat-form-field>
+
+
+
+    <div *ngIf="images.length > 0" class="images-wrapper">
+        <div class="image-wrap">
+            <div *ngFor="let image of images">
+                <div class="image-container">
+                    <img src="data:image/jpeg;base64,{{image.content}}" />
+                    <button (click)="deleteImage(image.id)" mat-mini-fab color="primary">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="recent-products">
+    <app-recent-products></app-recent-products>
+</div>

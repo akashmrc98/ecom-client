@@ -1,0 +1,74 @@
+@import url("./assets/css/animate.css/animate.min.css");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: #19456b;
+}
+
+.card-sm {
+    margin: 0.5rem;
+}
+.box-sm {
+    padding: 0.5rem;
+}
+
+.card {
+    margin: 1rem;
+}
+.box {
+    padding: 1rem;
+}
+
+.card-m {
+    margin: 1.5rem;
+}
+.box-m {
+    padding: 1.5rem;
+}
+
+.bw-radius-sm {
+    border-radius: 1vw;
+}
+.bw-radius-m {
+    border-radius: 2vw;
+}
+
+.shadow-sm {
+    box-shadow: 0px 5px 30px 0px rgba($color: #325288, $alpha: 0.15);
+}
+
+.shadow-m {
+    box-shadow: 0px 5px 30px 0px rgba($color: #325288, $alpha: 0.3);
+}
+
+.shadow-xl {
+    box-shadow: 0px 5px 30px 0px rgba($color: #325288, $alpha: 0.6);
+}
+
+button {
+    font-weight: bold;
+    color: #19456b;
+}
+
+.mat-badge-content {
+    font-family: Poppins;
+    font-weight: bold;
+}
+
+.error {
+    color: #e93b81;
+}
+
+mat-spinner {
+    margin: 10rem auto;
+    width: 50%;
+}
+
+.mat-snack-bar-handset {
+    color: aliceblue;
+}

@@ -1,0 +1,66 @@
+.products {
+    margin: 1em;
+    row-gap: 2%;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    column-gap: 2%;
+    padding: 1em;
+    justify-content: flex-start;
+}
+
+.product-image {
+    display: flex;
+    flex-direction: column;
+
+    img {
+        width: 100%;
+    }
+}
+
+.specs {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .brand {
+        font-size: 1.25em;
+    }
+    .price {
+        font-weight: bold;
+    }
+    .description,
+    .stock,
+    .error {
+        font-size: 0.8em;
+    }
+    .stock,
+    .error {
+        font-weight: bold;
+    }
+}
+
+.cta-buttons {
+    display: flex;
+    column-gap: 2%;
+    justify-content: flex-start;
+    padding: 0.5em 0;
+}
+
+.ratings {
+    display: flex;
+
+    .rating {
+        mat-icon {
+            color: #fb9300;
+        }
+    }
+
+    .stat {
+        font-weight: bold;
+        margin: 0 0.5em;
+    }
+}

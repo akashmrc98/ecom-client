@@ -1,0 +1,18 @@
+<app-taskbar></app-taskbar>
+
+<div class="account">
+    <button mat-raised-button class="account-options">
+        <mat-icon>account_circle_outline</mat-icon>
+    </button>
+    <button [routerLink]="['/', 'address-creator', username]" mat-raised-button class="account-options">
+        <mat-icon>home_outline</mat-icon>
+    </button>
+    <button mat-raised-button class="account-options">
+        <mat-icon>reviews</mat-icon>
+    </button>
+    <button mat-raised-button class="account-options">
+        <mat-icon>
+            feedback
+        </mat-icon>
+    </button>
+</div>

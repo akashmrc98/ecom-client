@@ -1,0 +1,35 @@
+.login-form {
+    margin: 2em;
+    padding: 1em;
+    box-shadow: 0px 5px 30px rgba($color: #325288, $alpha: 0.15);
+    border-radius: 2vh;
+}
+
+.form-elements {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    width: 50%;
+    height: 3.25em;
+    align-self: flex-start;
+    margin-bottom: 0.75em;
+}
+
+.button-grouper {
+    display: flex;
+    column-gap: 2%;
+}
+
+@media only screen and (min-width: 1366px) {
+    .login-form {
+        margin: 10em 40em;
+        border-radius: 1vw;
+    }
+}

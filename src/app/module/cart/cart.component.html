@@ -1,0 +1,59 @@
+<app-taskbar></app-taskbar>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!isLoading">
+
+    <div *ngIf="noOfProducts !== 0 && price !== 0">
+        <div class="bw-radius-sm card box shadow-m">
+            <div class="cart-spec">
+                <div class="cart-stats">
+                    <h4> Total {{noOfProducts}} items in cart!</h4>
+                    <h5>Total {{price}} ₹ only</h5>
+                </div>
+                <button (click)="checkOut()" mat-raised-button color="primary">
+                    <mat-icon>shopping_cart</mat-icon>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="bw-radius-sm card box shadow-m" *ngIf="price === 0 && noOfProducts === 0">
+        <h1>Cart is Empty!</h1>
+    </div>
+
+    <div *ngFor="let product of products; let i = index">
+        <div class="products shadow-m card box bw-radius-sm">
+            <div class="product">
+                <div class="image">
+                    <img [src]="getImage(product)">
+
+                    <div class="specs">
+                        <div class="price"> {{product.price}} ₹ </div>
+                        <div class="brand"> {{product.brand}} </div>
+                        <div class="description">
+                            {{product.description}}
+                        </div>
+                    </div>
+
+                    <div class="buttons-group">
+                        <button mat-mini-fab (click)="addQuantity(product.stock, i)" color="light">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <div class="counter bw-radius-sm">
+                            {{productQuantityList[i]}}
+                        </div>
+                        <button (click)="removeQuantity(i)" mat-mini-fab color="light">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                        <button (click)="removeProductFromCart(product.id, i)" mat-mini-fab color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

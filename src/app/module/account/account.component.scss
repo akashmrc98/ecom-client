@@ -1,0 +1,19 @@
+.account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+}
+
+.account-options {
+    padding: 0.5em;
+    margin: 0.5em;
+    box-shadow: 0px 10px 60px -10px rgba($color: #325288, $alpha: 0.15);
+    border-radius: 1vh;
+}
+
+button {
+    font-weight: bold;
+    width: 0%;
+}

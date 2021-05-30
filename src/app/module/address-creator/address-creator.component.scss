@@ -1,0 +1,32 @@
+.address {
+    display: grid;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.buttons-group {
+    display: flex;
+    column-gap: 3%;
+    padding: 0.25em 0;
+    justify-content: flex-start;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-divider {
+    margin: 0.25em 0;
+}
+
+.address-stats {
+    display: flex;
+    column-gap: 3%;
+    justify-content: flex-start;
+}
+
+.buttons-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

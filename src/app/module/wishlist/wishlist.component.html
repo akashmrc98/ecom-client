@@ -1,0 +1,38 @@
+<app-taskbar></app-taskbar>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="!isLoading">
+    <div *ngIf="products.length === 0" class="box card shadow-m bw-radius-m">
+        <h1>Wishlist is Empty!</h1>
+    </div>
+
+    <div *ngFor="let product of products; let i = index">
+        <div class="products card box shadow-m bw-radius-m">
+            <div class="product">
+                <div class="image">
+                    <img [src]="getImage(product)">
+
+                    <div class="specs">
+                        <div class="price"> {{product.price}} ₹ </div>
+                        <div class="brand"> {{product.brand}} </div>
+                        <div class="stock"> only {{product.stock}} left </div>
+                        <div class="description">
+                            {{product.description}}
+                        </div>
+                    </div>
+
+                    <div class="buttons-group">
+                        <button (click)="moveToCart(product.id, i)" mat-mini-fab color="primary">
+                            <mat-icon>shopping_cart</mat-icon>
+                        </button>
+
+                        <button (click)="removeProductFromWishList(product.id, i)" mat-mini-fab color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

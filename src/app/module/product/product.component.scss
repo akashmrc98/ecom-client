@@ -1,0 +1,42 @@
+.product {
+    padding: 0.5em;
+}
+
+.images {
+    padding: 0.5em;
+    img {
+        width: 100%;
+    }
+    .dots {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+.specs {
+    .brand {
+        font-size: 1.25em;
+    }
+    .stock {
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+    .description {
+        font-size: 0.8em;
+    }
+    .price {
+        font-weight: bold;
+    }
+    .config {
+        font-size: 0.8em;
+        padding: 0.25em;
+    }
+}
+
+.buttons-group {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 4%;
+    margin: 0.5em 0;
+}

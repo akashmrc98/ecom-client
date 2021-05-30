@@ -1,0 +1,71 @@
+.taskbar {
+    position: relative;
+    box-shadow: 0px 10px 60px -10px rgba($color: #325288, $alpha: 0.25);
+    padding: 0.25em;
+    color: #435560;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: 1fr 6fr 2fr;
+    column-gap: 4%;
+    line-height: 2em;
+    font-weight: bold;
+    font-size: 1.4em;
+    padding: 0 0.25em;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    color: #435560;
+}
+
+.buttons-group {
+    display: flex;
+    justify-content: center;
+}
+
+.side-navigation {
+    top: 8vh;
+    background-color: #ffffff;
+    position: absolute;
+    width: 100%;
+    width: 80%;
+    box-shadow: 0px 10px 60px -10px rgba($color: #325288, $alpha: 0.5);
+    border-top-right-radius: 1vh;
+    border-bottom-right-radius: 1vh;
+    z-index: 1;
+    padding: 1em;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+
+    form {
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .content-items {
+        padding: 0 0.25em;
+    }
+}
+
+li {
+    list-style: none;
+    padding: 0.25em;
+
+    button {
+        width: 100%;
+        text-align: left;
+    }
+
+    button:hover {
+        background-color: #e1e5ea;
+    }
+}
+
+mat-divider {
+    margin: 0.25em 0;
+}
