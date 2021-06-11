@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './module/material/material.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -15,7 +14,6 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
-    MaterialModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}),

@@ -1,14 +1,15 @@
-import { Product } from '@model/product.model';
+import { Product } from '@model/domain/product.model';
+import { ProductList } from '@model/domain/ProductList.model';
 import { createAction, props } from '@ngrx/store';
 
 export const cartProducts = createAction(
     '[Cart] Cart Products',
-    props<{ products: Product[] }>()
+    props<{ products: ProductList[] }>()
 );
 
 export const addProduct = createAction(
     '[Cart] Add Product',
-    props<{ product: Product }>()
+    props<{ product: ProductList }>()
 );
 
 export const removeProduct = createAction(

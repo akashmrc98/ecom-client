@@ -3,15 +3,22 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
 <div *ngIf="!isLoading">
-    <div *ngIf="products.length === 0" class="box card shadow-m bw-radius-m">
-        <h1>Wishlist is Empty!</h1>
+    <div *ngIf="products.length === 0" class="image-empty">
+        <img src="../../../assets/message/undraw_empty_xct9.svg">
+        <div class="shadow-m bw-radius-m box">
+            <h3>Wishlist is Empty!</h3>
+            <h5>Add some favouite products to your wishlist.</h5>
+        </div>
+        <button mat-raised-button [routerLink]="['/', 'products']" class="see-products" color="primary">
+            Trending Products
+        </button>
     </div>
 
     <div *ngFor="let product of products; let i = index">
         <div class="products card box shadow-m bw-radius-m">
             <div class="product">
                 <div class="image">
-                    <img [src]="getImage(product)">
+                    <img [src]="product.images | imageViewer" (click)="goToProductPage(product.id)">
 
                     <div class="specs">
                         <div class="price"> {{product.price}} ₹ </div>
@@ -23,7 +30,8 @@
                     </div>
 
                     <div class="buttons-group">
-                        <button (click)="moveToCart(product.id, i)" mat-mini-fab color="primary">
+                        <button *ngIf="product.stock!==0" (click)="moveProductToCart(product.id, i)" mat-mini-fab
+                            color="primary">
                             <mat-icon>shopping_cart</mat-icon>
                         </button>
 

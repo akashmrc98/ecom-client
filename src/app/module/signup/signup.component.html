@@ -1,3 +1,8 @@
+<div class="titles">
+    <h1>... Stores</h1>
+    <h4>One stop for all your needs.</h4>
+</div>
+
 <div class="container">
     <div class="user-form">
         <form [formGroup]="userForm" class="form-elements">
@@ -28,9 +33,18 @@
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="email">
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
                 <button mat-icon-button matSuffix (click)="hide = !hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>

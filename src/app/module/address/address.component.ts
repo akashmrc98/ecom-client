@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Address } from '@model/address.model';
+import { Address } from '@model/domain/address.model';
 import { UserService } from '@service/user/user.service';
 import { username } from 'config/http.config';
 

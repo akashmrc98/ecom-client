@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Product } from '@model/product.model';
+import { Product } from '@model/domain/product.model';
 
 import { CartService } from '@service/cart/cart.service';
 import { ProductService } from '@service/product/product.service';
 import { WishlistService } from '@service/wishlist/wishlist.service';
 
-import { select, Store } from '@ngrx/store';
-import * as fromTaskBarActions from '@store/taskbar/taskbar.actions';
-import * as fromTaskBarSelectors from '@store/taskbar/taskbar.selector'
+import { CommonService } from '@service/common/common.service';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +23,7 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private wishListService: WishlistService,
-    private TaskBarStore: Store<fromTaskBarSelectors.TaskBarFeature>
+    private commonService: CommonService
   ) { }
 
   product: Product = {
@@ -68,8 +66,6 @@ export class ProductComponent implements OnInit {
       })
   }
 
-
-
   getImage(id: number) {
     this.image = 'data:image/jpeg;base64,' + this.product.images[id].content
   }
@@ -79,7 +75,7 @@ export class ProductComponent implements OnInit {
       .addProductToCartByProductID(productId)
       .subscribe(
         (next) => {
-          this.updateCurrentNoOfProductsInCart(1)
+          this.commonService.updateCartBadge(1)
           this._snackBar.open("Product Added to Cart!", 'close', { duration: 5000 })
         },
         (error) => {
@@ -93,7 +89,7 @@ export class ProductComponent implements OnInit {
       .addProductToWishListByProductId(productId)
       .subscribe(
         (next) => {
-          this.updateCurrentNoOfProductsInWishList(1)
+          this.commonService.updateWishListBadge(1)
           this._snackBar.open("Product Added to WishList!", 'close', { duration: 5000 })
         },
         (error) => {
@@ -101,24 +97,5 @@ export class ProductComponent implements OnInit {
         }
       )
   }
-
-  updateCurrentNoOfProductsInCart(count: number) {
-    let noOfProducts: number = 0;
-    this.TaskBarStore
-      .pipe(select(fromTaskBarSelectors.noOfProductsInCart))
-      .subscribe(_noOfProducts => noOfProducts = _noOfProducts)
-    this.TaskBarStore
-      .dispatch(fromTaskBarActions.noOfProductsInCart({ noOfCartProducts: noOfProducts + count }))
-  }
-
-  updateCurrentNoOfProductsInWishList(count: number) {
-    let noOfProducts: number = 0;
-    this.TaskBarStore
-      .pipe(select(fromTaskBarSelectors.noOfProductsInWishList))
-      .subscribe(_noOfProducts => noOfProducts = _noOfProducts)
-    this.TaskBarStore
-      .dispatch(fromTaskBarActions.noOfProductsInWishList({ noOfWishListProducts: noOfProducts + count }))
-  }
-
 
 }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { PaymentRoutingModule } from './payment-routing.module';
 import { PaymentComponent } from './payment.component';
-import { SharedModule } from '@module/shared/shared.module';
-import { TaskbarModule } from '@module/taskbar/taskbar.module';
+import { SharedModule } from 'shared/shared.module';
+import { TaskbarModule } from 'component/taskbar/taskbar.module';
 
 
 @NgModule({

@@ -1,11 +1,11 @@
-import { Product } from '@model/product.model';
+import { ProductList } from '@model/domain/ProductList.model';
 import { createReducer, on, Action } from '@ngrx/store';
 import { addProduct, removeProduct, clearWishList, wishListProducts } from './wishlist.actions';
 
 export const key = "wishlist"
 
 export interface WishListState {
-    products: Product[],
+    products: ProductList[],
     isLoaded: boolean
 }
 

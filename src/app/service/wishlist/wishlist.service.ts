@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AddItemToWishList } from '@model/addItemToWishList';
-import { Product } from '@model/product.model';
+import { WishListDTO } from '@model/dto/wishlist.dto';
 import { WISHLIST_API } from 'config/http.config';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProductList } from '@model/domain/ProductList.model';
 
 @Injectable({
   providedIn: 'any'
@@ -15,12 +15,12 @@ export class WishlistService {
   wishListId: number = Number(localStorage.getItem("wishListId"))
 
   addProductToWishListByProductId(productId: number) {
-    const addItemToWishList: AddItemToWishList = { wishListId: this.wishListId, productId: productId }
+    const addItemToWishList: WishListDTO = { wishListId: this.wishListId, productId: productId }
     return this.http.post(WISHLIST_API + "/", addItemToWishList)
   }
 
-  getWishListProductsById(): Observable<Product[]> {
-    return this.http.get<Product[]>(WISHLIST_API + "/" + this.wishListId)
+  getWishListProductsById(): Observable<ProductList[]> {
+    return this.http.get<ProductList[]>(WISHLIST_API + "/" + this.wishListId)
   }
 
   getNoOfProductsInWishList(): Observable<number> {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@module/shared/shared.module';
-import { TaskbarModule } from '@module/taskbar/taskbar.module';
+import { SharedModule } from 'shared/shared.module';
+import { TaskbarModule } from 'component/taskbar/taskbar.module';
 
 import { PageNotfoundRoutingModule } from './page-notfound-routing.module';
 import { PageNotfoundComponent } from './page-notfound.component';

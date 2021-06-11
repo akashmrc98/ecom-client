@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
-import { SharedModule } from '@module/shared/shared.module';
-import { TaskbarModule } from '@module/taskbar/taskbar.module';
+import { SharedModule } from 'shared/shared.module';
+import { TaskbarModule } from 'component/taskbar/taskbar.module';
 
 @NgModule({
   declarations: [

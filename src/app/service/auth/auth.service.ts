@@ -3,18 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NETWORK } from '../../config/http.config';
 
-import { JwtResponse } from '../../model/jwt.model';
-import { AuthData } from '../../model/auth.model';
-import { Router } from '@angular/router';
+import { JwtResponse } from '../../model/domain/jwt.model';
+import { AuthDTO } from '../../model/dto/auth.dto';
 
 @Injectable({
   providedIn: 'any'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
-  login(authData: AuthData): Observable<JwtResponse> {
+  login(authData: AuthDTO): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(NETWORK + "/login", authData)
   }
 

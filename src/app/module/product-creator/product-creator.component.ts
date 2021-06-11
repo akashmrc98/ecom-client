@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { Image } from '@model/image.model';
-import { Product } from '@model/product.model';
+import { Image } from '@model/domain/image.model';
+import { Product } from '@model/domain/product.model';
 import { ImageService } from '@service/image/image.service';
 import { ProductService } from '@service/product/product.service';
 

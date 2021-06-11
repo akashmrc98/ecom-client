@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Image } from '@model/image.model';
+import { Image } from '@model/domain/image.model';
 import { API } from 'config/http.config';
 import { Observable } from 'rxjs';
 

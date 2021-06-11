@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Purchases } from '@model/purchase.model';
+import { Purchases } from '@model/domain/purchase.model';
 import { username } from 'config/http.config';
 
 @Component({
@@ -14,7 +14,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   purchase: Purchases = {
     address: null,
     id: null,
-    lastModifiedAt: null,
     paymentMethod: "",
     products: null,
     productsQuantityList: null,
@@ -35,6 +34,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     if (isPurchaseData !== null && isPurchaseData !== undefined)
       this.purchase = isPurchaseData
     this.isLoading = false
+
+    console.log(this.purchase)
   }
 
   ngOnDestroy() {

@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { CartService } from '@service/cart/cart.service';
 import { ProductService } from '@service/product/product.service';
 import { WishlistService } from '@service/wishlist/wishlist.service';
-import { Product } from '@model/product.model';
+
 import { select, Store } from '@ngrx/store';
-import * as fromTaskBarSelectors from '@store/taskbar/taskbar.selector';
-import * as fromTaskBarActions from '@store/taskbar/taskbar.actions';
 
 import * as fromCartStoreActions from '@store/cart/cart.actions'
 import * as fromCartStoreSelectors from '@store/cart/cart.selector'
 
 import * as fromWishListStoreActions from '@store/wishList/wishlist.actions'
 import * as fromWishListSelectors from '@store/wishList/wishlist.selector'
-import { Review } from '@model/domain/review.model';
+
+import * as fromProductActions from '@store/product/product.actions'
+import * as fromProductSelectors from '@store/product/product.selector'
+
+import { CommonService } from '@service/common/common.service';
+import { ProductList } from '@model/domain/ProductList.model';
 
 @Component({
   selector: 'app-products',
@@ -23,51 +26,52 @@ import { Review } from '@model/domain/review.model';
 })
 export class ProductsComponent implements OnInit {
   constructor(
-    private router: Router,
     private _snackBar: MatSnackBar,
     private productService: ProductService,
     private cartService: CartService,
     private wishListService: WishlistService,
-    private taskBarStore: Store<fromTaskBarSelectors.TaskBarFeature>,
     private cartStore: Store<fromCartStoreSelectors.CartFeature>,
-    private wishListStore: Store<fromWishListSelectors.WishListFeature>
+    private wishListStore: Store<fromWishListSelectors.WishListFeature>,
+    private commonService: CommonService,
+    private productStore: Store<fromProductSelectors.ProductFeature>
   ) { }
 
-  products: Product[] = []
+  products: ProductList[] = []
 
   isLoading: boolean = true;
   isAddedToCart: boolean = false
 
-  getImage(product: Product) { return 'data:image/jpeg;base64,' + product.images[0].content }
+  goToProductPage(productId: number) {
+    this.commonService.viewProductPage(productId)
+  }
 
   getProducts() {
     this.isLoading = true
-    this.productService.getProducts().subscribe(products => {
+    this.productService.getProducts(0, 4, "").subscribe(products => {
+      this.productStore.dispatch(fromProductActions.products({ products: products }))
       this.products = products
       this.isLoading = false
     })
   }
 
   ngOnInit(): void {
-    this.getProducts()
+    this.productStore.pipe(select(fromProductSelectors.isLoaded)).subscribe(isLoaded => this.isProductsLoaded(isLoaded))
   }
 
-  getProduct(productId: number): Product {
-    return this.products.find(product => product.id === productId)
+  isProductsLoaded(isLoaded: boolean) {
+    if (isLoaded)
+      this.productStore.pipe(select(fromProductSelectors.products)).subscribe(products => this.products = products)
+    if (!isLoaded)
+      this.getProducts()
+    this.isLoading = false
   }
 
-  getAverageRatings(reviews: Review[]): number {
-    let averageRating: number = 0;
-    reviews.forEach(review => averageRating += review.rating)
-    averageRating /= reviews.length
-    return averageRating
-  }
-
-  addToCart(productId: number): void {
+  addProductToCart(productId: number): void {
+    const product: ProductList = this.commonService.getProductById(productId, this.products)
     this.cartService.addProductToCartByProductID(productId).subscribe(
       (next) => {
-        this.cartStore.dispatch(fromCartStoreActions.addProduct({ product: this.getProduct(productId) }))
-        this.updateCurrentNoOfProductsInCart(1)
+        this.cartStore.dispatch(fromCartStoreActions.addProduct({ product: product }))
+        this.commonService.updateCartBadge(1)
         this._snackBar.open("Product Added to Cart!", 'close', { duration: 5000 })
       },
       (error) => {
@@ -75,11 +79,12 @@ export class ProductsComponent implements OnInit {
       })
   }
 
-  addToWishList(productId: number): void {
+  addProductToWishList(productId: number): void {
+    const product: ProductList = this.commonService.getProductById(productId, this.products)
     this.wishListService.addProductToWishListByProductId(productId).subscribe(
       (next) => {
-        this.updateCurrentNoOfProductsInWishList(1)
-        this.wishListStore.dispatch(fromWishListStoreActions.addProduct({ product: this.getProduct(productId) }))
+        this.commonService.updateWishListBadge(1)
+        this.wishListStore.dispatch(fromWishListStoreActions.addProduct({ product: product }))
         this._snackBar.open("Product Added to WishList!", 'close', { duration: 5000 })
       },
       (error) => {
@@ -87,27 +92,4 @@ export class ProductsComponent implements OnInit {
       }
     )
   }
-
-  viewProduct(id: number): void {
-    this.router.navigate(['product', id.toString()])
-  }
-
-  updateCurrentNoOfProductsInCart(count: number) {
-    let noOfProducts: number = 0;
-    this.taskBarStore
-      .pipe(select(fromTaskBarSelectors.noOfProductsInCart))
-      .subscribe(_noOfProducts => noOfProducts = _noOfProducts)
-    this.taskBarStore
-      .dispatch(fromTaskBarActions.noOfProductsInCart({ noOfCartProducts: noOfProducts + count }))
-  }
-
-  updateCurrentNoOfProductsInWishList(count: number) {
-    let noOfProducts: number = 0;
-    this.taskBarStore
-      .pipe(select(fromTaskBarSelectors.noOfProductsInWishList))
-      .subscribe(_noOfProducts => noOfProducts = _noOfProducts)
-    this.taskBarStore
-      .dispatch(fromTaskBarActions.noOfProductsInWishList({ noOfWishListProducts: noOfProducts + count }))
-  }
-
 }

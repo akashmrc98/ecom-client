@@ -14,8 +14,8 @@
             </div>
         </div>
 
-        <div *ngIf="product.stock !== 0" class="buttons-group">
-            <button (click)="addToCart(product.id)" color="primary" mat-raised-button>
+        <div class="buttons-group">
+            <button *ngIf="product.stock !== 0" (click)="addToCart(product.id)" color="primary" mat-raised-button>
                 <mat-icon>shopping_cart</mat-icon>
             </button>
 

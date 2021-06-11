@@ -1,8 +1,17 @@
 .login-form {
-    margin: 2em;
-    padding: 1em;
-    box-shadow: 0px 5px 30px rgba($color: #325288, $alpha: 0.15);
-    border-radius: 2vh;
+    padding: 2rem;
+}
+
+img {
+    width: 100%;
+}
+
+.titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
 }
 
 .form-elements {

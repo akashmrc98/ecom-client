@@ -1,15 +1,14 @@
 .products {
-    margin: 1em;
-    row-gap: 2%;
-    display: grid;
-    grid-template-columns: 1fr;
+    margin: 0 2rem;
+    display: block;
 }
 
 .product {
     display: flex;
     flex-direction: column;
     column-gap: 2%;
-    padding: 1em;
+    padding: 1rem;
+    margin: 2rem 0;
     justify-content: flex-start;
 }
 
@@ -63,4 +62,9 @@
         font-weight: bold;
         margin: 0 0.5em;
     }
+}
+
+.paginator {
+    display: block;
+    margin-top: 1rem;
 }

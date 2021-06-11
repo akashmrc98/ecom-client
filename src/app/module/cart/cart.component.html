@@ -19,15 +19,25 @@
     </div>
 
 
-    <div class="bw-radius-sm card box shadow-m" *ngIf="price === 0 && noOfProducts === 0">
-        <h1>Cart is Empty!</h1>
+    <div *ngIf="price === 0 && noOfProducts === 0" class="cart">
+
+        <img src="../../../assets/message/undraw_empty_cart_co35.svg" class="box card">
+
+        <div class="bw-radius box shadow-m bw-radius-m">
+            <h3>Cart is empty!</h3>
+            <h5>Looks like you haven't made your choice yet.</h5>
+        </div>
+
+        <button mat-raised-button [routerLink]="['/', 'products']" class="see-products" color="primary">
+            Trending Products
+        </button>
     </div>
 
     <div *ngFor="let product of products; let i = index">
         <div class="products shadow-m card box bw-radius-sm">
             <div class="product">
                 <div class="image">
-                    <img [src]="getImage(product)">
+                    <img [src]="product.images | imageViewer" (click)="goToProductPage(product.id)">
 
                     <div class="specs">
                         <div class="price"> {{product.price}} ₹ </div>

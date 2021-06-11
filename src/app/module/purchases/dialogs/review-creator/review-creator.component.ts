@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ReviewDto } from '@model/dtos/review.dto';
+import { ReviewDTO } from '@model/dto/review.dto';
 import { PurchasesComponent } from '@module/purchases/purchases.component';
 import { ReviewService } from '@service/review/review.service';
 import { username } from 'config/http.config';
@@ -27,7 +27,7 @@ export class ReviewCreatorComponent {
   stars: string[] = ["star_outline", "star_outline", "star_outline", "star_outline", "star_outline"];
   ratings: number = 0
   username: string = username
-  reviewDto: ReviewDto;
+  reviewDto: ReviewDTO;
 
   rateProduct(index: number) {
     let stars = [];

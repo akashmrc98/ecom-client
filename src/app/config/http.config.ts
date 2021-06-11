@@ -3,8 +3,8 @@ let network: string = "";
 let server: string = "local-dev"
 
 if (server === "local-dev") {
-    api = "http://192.168.0.6:8080/api/v1/ecommerce"
-    network = "http://192.168.0.6:8080"
+    api = "http://localhost:9080/api/v1/ecommerce"
+    network = "http://localhost:9080"
 }
 
 if (server === "docker-dev") {

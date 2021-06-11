@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Purchase } from '@model/purchase.model';
-import { Product } from '@model/product.model';
-import { CartService } from '@service/cart/cart.service';
 import { Router } from '@angular/router';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { PurchaseDTO } from '@model/dto/purchase.dto';
+
 import { select, Store } from '@ngrx/store';
-
-import * as fromTaskBarActions from '@store/taskbar/taskbar.actions';
-import * as fromTaskBarSelectors from '@store/taskbar/taskbar.selector';
-
 import * as fromCartActions from '@store/cart/cart.actions';
 import * as fromCartSelectors from '@store/cart/cart.selector';
 
-import { Observable, VirtualTimeScheduler } from 'rxjs';
 import { cartId, username } from 'config/http.config';
+import { CommonService } from '@service/common/common.service';
+import { CartService } from '@service/cart/cart.service';
+import { ProductList } from '@model/domain/ProductList.model';
 
 @Component({
   selector: 'app-cart',
@@ -22,11 +21,8 @@ import { cartId, username } from 'config/http.config';
 })
 export class CartComponent implements OnInit {
 
-  $products: Observable<Product[]>;
-  products: Product[] = [];
-
+  products: ProductList[] = [];
   productQuantityList: number[] = [];
-  productIdList: number[] = [];
 
   price: number = 0;
   noOfProducts: number = 0;
@@ -37,39 +33,9 @@ export class CartComponent implements OnInit {
     private cartService: CartService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private taskbar: Store<fromTaskBarSelectors.TaskBarFeature>,
-    private cartStore: Store<fromCartSelectors.CartFeature>
+    private cartStore: Store<fromCartSelectors.CartFeature>,
+    private commonService: CommonService
   ) { }
-
-  getImage(product: Product) {
-    return 'data:image/jpeg;base64,' + product.images[0].content
-  }
-
-  initItemsList() {
-    if (this.productQuantityList.length === 0)
-      for (let i = 0; i < this.products.length; i++)
-        this.productQuantityList.push(1)
-  }
-
-  updateItemsPrice() {
-    let price = 0;
-    let pricesList: number[] = []
-    let productIdList: number[] = []
-    this.products.map(product => {
-      pricesList.push(product.price)
-      productIdList.push(product.id)
-    })
-    for (let i = 0; i < pricesList.length; i++)
-      price += pricesList[i] * this.productQuantityList[i]
-    this.price = price;
-    this.productIdList = productIdList;
-  }
-
-  updateTotalItems() {
-    let noOfProducts = 0;
-    this.productQuantityList.map(currentProduct => { noOfProducts += currentProduct })
-    this.noOfProducts = noOfProducts
-  }
 
   fromHttpServerGetProducts() {
     this.isLoading = true
@@ -86,9 +52,9 @@ export class CartComponent implements OnInit {
     this.cartStore
       .pipe(select(fromCartSelectors.products))
       .subscribe(products => this.products = products)
-    this.initItemsList()
-    this.updateTotalItems()
-    this.updateItemsPrice()
+    this.productQuantityList = this.cartService.getProductsListQuantityList(this.products.length, this.productQuantityList)
+    this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
+    this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
   }
 
   isProductsLoaded(isLoaded: boolean) {
@@ -105,42 +71,39 @@ export class CartComponent implements OnInit {
   }
 
   addQuantity(stock: number, index: number) {
-    if (this.productQuantityList[index] < 4 && this.productQuantityList[index] < stock)
-      this.productQuantityList[index] += 1;
-    this.updateTotalItems()
-    this.updateItemsPrice()
+    this.cartService.addUnitQuantity(this.productQuantityList, index, stock)
+    this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
+    this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
   }
 
   removeQuantity(index: number) {
-    if (this.productQuantityList[index] > 1)
-      this.productQuantityList[index] -= 1;
-    this.updateTotalItems()
-    this.updateItemsPrice()
+    this.cartService.removeUnitQuantity(this.productQuantityList, index)
+    this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
+    this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
   }
-
 
   removeProductFromCart(productId: number, index: number) {
     this.cartService
       .removeProductFromCartByProductID(productId)
       .subscribe(() => {
         this.cartStore.dispatch(fromCartActions.removeProduct({ index: index }))
-        this.updateCurrentNoOfProductsInCart(-1)
+        this.commonService.updateCartBadge(-1)
         this.productQuantityList.splice(index, 1)
-        this.updateTotalItems()
-        this.updateItemsPrice()
+        this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
+        this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
         this._snackBar.open("Product removed from cart!", 'close')
       })
   }
 
   checkOut() {
-    const purchase: Purchase = {
+    const productIdList: number[] = this.cartService.getProductIdList(this.products)
+    const purchase: PurchaseDTO = {
       cartId: cartId,
       username: username,
       totalProducts: this.noOfProducts,
       totalPrice: this.price,
-      products: this.products,
       productsQuantityList: this.productQuantityList,
-      productsIdList: this.productIdList,
+      productsIdList: productIdList,
       address: null,
       paymentMethod: ""
     }
@@ -152,19 +115,13 @@ export class CartComponent implements OnInit {
   cleanUp() {
     this.products = [];
     this.productQuantityList = [];
-    this.productIdList = [];
     this.price = 0;
     this.noOfProducts = 0;
     this.isLoading = true
   }
 
-  updateCurrentNoOfProductsInCart(count: number) {
-    let noOfProducts: number = 0;
-    this.taskbar
-      .pipe(select(fromTaskBarSelectors.noOfProductsInCart))
-      .subscribe(_noOfProducts => noOfProducts = _noOfProducts)
-    this.taskbar
-      .dispatch(fromTaskBarActions.noOfProductsInCart({ noOfCartProducts: noOfProducts + count }))
+  goToProductPage(productId: number) {
+    this.commonService.viewProductPage(productId)
   }
 
 }

@@ -1,11 +1,11 @@
-import { Product } from '@model/product.model';
+import { ProductList } from '@model/domain/ProductList.model';
 import { createReducer, on, Action } from '@ngrx/store';
 import { addProduct, cartProducts, clearCart, removeProduct } from './cart.actions';
 
 export const key = "cart"
 
 export interface CartState {
-    products: Product[],
+    products: ProductList[],
     isLoaded: boolean
 }
 

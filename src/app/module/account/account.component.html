@@ -2,17 +2,16 @@
 
 <div class="account">
     <button mat-raised-button class="account-options">
-        <mat-icon>account_circle_outline</mat-icon>
+        Profile
     </button>
     <button [routerLink]="['/', 'address-creator', username]" mat-raised-button class="account-options">
-        <mat-icon>home_outline</mat-icon>
+        Address
     </button>
     <button mat-raised-button class="account-options">
-        <mat-icon>reviews</mat-icon>
+        Reviews
     </button>
-    <button mat-raised-button class="account-options">
-        <mat-icon>
-            feedback
-        </mat-icon>
+
+    <button mat-raised-button [routerLink]="['/', 'purchases', username]" class="account-options">
+        Purchases
     </button>
 </div>

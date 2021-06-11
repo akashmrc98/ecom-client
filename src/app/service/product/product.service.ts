@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { PRODUCT_API } from '../../config/http.config';
-import { Product } from '../../model/product.model'
+import { Product } from '@model/domain/product.model'
 import { map, shareReplay } from 'rxjs/operators'
 import { Review } from '@model/domain/review.model';
+import { ProductList } from '@model/domain/ProductList.model';
 
 @Injectable({ providedIn: 'any' })
 export class ProductService {
@@ -14,8 +15,14 @@ export class ProductService {
     return this.http.post<any>(PRODUCT_API + "/", product)
   }
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(PRODUCT_API).pipe(map(products => products), shareReplay())
+  getProducts(pageNo: number, pageSize: number, sortBy: string): Observable<ProductList[]> {
+    const params = `?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}`
+    return this.http.get<ProductList[]>(PRODUCT_API + params).pipe(map(products => products), shareReplay())
+  }
+
+  getProductsSize(): Observable<number> {
+    const params = `/size`
+    return this.http.get<number>(PRODUCT_API + params).pipe(map(products => products), shareReplay())
   }
 
   getProduct(id: number): Observable<Product> {

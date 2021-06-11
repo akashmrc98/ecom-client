@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthData } from '@model/auth.model';
+import { AuthDTO } from '@model/dto/auth.dto';
 import { AuthService } from '@service/auth/auth.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { AuthService } from '@service/auth/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  hide: boolean = false
 
+  hide: boolean = true
 
   userLoginForm: FormGroup = new FormGroup({
     username: new FormControl(null, [Validators.required]),
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    const authData: AuthData = this.userLoginForm.value
+    const authData: AuthDTO = this.userLoginForm.value
     this.authService.login(authData)
       .subscribe(response => {
         localStorage.setItem("id", response.id.toString())

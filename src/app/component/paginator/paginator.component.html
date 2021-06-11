@@ -1,0 +1,9 @@
+<mat-spinner color="warn" *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="isLoading" class="container">
+    <div *ngFor="let page of pageSize; let i = index" class="buttons-group">
+        <button (click)="getProducts(i)" mat-icon-button color="light">
+            {{page + 1}}
+        </button>
+    </div>
+</div>

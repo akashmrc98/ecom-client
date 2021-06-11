@@ -3,23 +3,24 @@
 <mat-spinner color="warn" *ngIf="isLoading"></mat-spinner>
 
 <div class="products" *ngIf="!isLoading">
-    <div *ngFor="let product of products">
-        <div class="product shadow-m bw-radius-m">
+    <div appScroller *ngFor="let product of products">
+        <div class="product shadow-sm bw-radius-m">
 
-            <div *ngIf="product.reviews.length !== 0" class="ratings">
-                <app-rating [ratings]="getAverageRatings(product.reviews)"></app-rating>
-                <div class="stat">( {{product.reviews.length}} reviews )</div>
+            <div *ngIf="product.reviews !== 0" class="ratings">
+                <app-rating [ratings]="product.ratings"></app-rating>
+                <div class="stat">( {{product.reviews}} reviews )</div>
             </div>
 
-            <div class="product-image" (click)="viewProduct(product.id)">
-                <img [src]="getImage(product)">
+            <div class="product-image" (click)="goToProductPage(product.id)">
+                <img [src]="product.images | imageViewer">
             </div>
 
             <div class="cta-buttons">
-                <button (click)="addToCart(product.id)" mat-raised-button color="primary">
+                <button *ngIf="product.stock!==0" (click)="addProductToCart(product.id)" mat-raised-button
+                    color="primary">
                     <mat-icon>shopping_cart</mat-icon>
                 </button>
-                <button (click)="addToWishList(product.id)" mat-raised-button color="accent">
+                <button (click)="addProductToWishList(product.id)" mat-raised-button color="accent">
                     <mat-icon>favorite</mat-icon>
                 </button>
             </div>
@@ -37,4 +38,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="paginator">
+    <app-paginator [isLoading]="isLoading"></app-paginator>
 </div>

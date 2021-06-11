@@ -8,5 +8,4 @@ export interface Review {
     reviewedOn: Date,
     useFul: number,
     isReviewed: boolean,
-    likes: string[]
 }

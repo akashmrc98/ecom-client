@@ -1,9 +1,11 @@
 .account {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     justify-content: center;
     align-items: center;
-    padding: 1em;
-    margin: 1em;
+    padding: 1rem 0.5rem;
+    margin: 1rem 0.5rem;
 }
 
 .account-options {
@@ -14,6 +16,5 @@
 }
 
 button {
-    font-weight: bold;
-    width: 0%;
+    font-size: 1rem;
 }

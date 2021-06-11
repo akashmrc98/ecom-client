@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Address } from '@model/address.model';
-import { Purchase } from '@model/purchase.model';
+import { Address } from '@model/domain/address.model';
+import { PurchaseDTO } from '@model/dto/purchase.dto';
 import { Store } from '@ngrx/store';
 import { PurchaseService } from '@service/purchase/purchase.service';
 import { UserService } from '@service/user/user.service';
@@ -33,7 +33,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) { }
 
   addresses: Address[];
-  purchase: Purchase = JSON.parse(localStorage.getItem("purchase"));
+  purchase: PurchaseDTO = JSON.parse(localStorage.getItem("purchase"));
   cartId: number = cartId
   username: string = username
   paymentMethod: string;
@@ -84,7 +84,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   checkOut() {
     this.isLoading = true
     const address: Address = this.addresses.find(address => address.id === this.addressId)
-    let purchase: Purchase = { ...this.purchase };
+    let purchase: PurchaseDTO = { ...this.purchase };
     purchase.address = address;
     purchase.paymentMethod = this.paymentMethod
     this.purchaseService.purchaseProductsFromCart(purchase).subscribe((transactionDetails) => {
