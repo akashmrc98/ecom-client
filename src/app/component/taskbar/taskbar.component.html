@@ -20,18 +20,16 @@
             <div class="content-items">
                 <ul>
                     <li [routerLink]="['/', 'products']"><button mat-flat-button>Trending</button></li>
-                    <li><button mat-flat-button>Shop by Category</button></li>
+                    <!-- <li><button mat-flat-button>Shop by Category</button></li> -->
                     <mat-divider></mat-divider>
-                    <li [routerLink]="['/', 'purchases', username]"><button mat-flat-button>Purchases</button></li>
-                    <li [routerLink]="['/', 'cart', cartId]"><button mat-flat-button>Cart</button></li>
-                    <li [routerLink]="['/', 'wishlist', wishListId]"><button mat-flat-button>WishList</button></li>
-                    <li [routerLink]="['/', 'account', username]"><button mat-flat-button>Account</button></li>
+                    <li [routerLink]="['/', 'orders', username]"><button mat-flat-button>Orders</button></li>
+                    <li [routerLink]="['/', 'cart', 1]"><button mat-flat-button>Cart</button></li>
+                    <li [routerLink]="['/', 'wishlist', 1]"><button mat-flat-button>WishList</button></li>
+                    <li [routerLink]="['/', 'account', username]"><button mat-flat-button>Settings</button></li>
                     <mat-divider></mat-divider>
                     <li><button (click)="logOut()" mat-flat-button>Logout</button></li>
                 </ul>
             </div>
-
-
         </div>
     </div>
 
@@ -42,13 +40,13 @@
         <span> ... Stores </span>
         <div class="buttons-group">
 
-            <button [routerLink]="['/', 'cart', cartId]" mat-icon-button>
+            <button [routerLink]="['/', 'cart', 1]" mat-icon-button>
                 <mat-icon [matBadge]="noOfProductsInCart" matBadgeColor="warn" color="primary">
                     shopping_cart
                 </mat-icon>
             </button>
 
-            <button [routerLink]="['/', 'wishlist', wishListId]" mat-icon-button>
+            <button [routerLink]="['/', 'wishlist', 1]" mat-icon-button>
                 <mat-icon [matBadge]="noOfProductsInWishList" matBadgeColor="warn" color="accent">favorite</mat-icon>
             </button>
 

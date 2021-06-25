@@ -1,4 +1,3 @@
-import { Product } from '@model/domain/product.model';
 import { ProductList } from '@model/domain/ProductList.model';
 import { createAction, props } from '@ngrx/store';
 
@@ -19,4 +18,9 @@ export const removeProduct = createAction(
 
 export const clearCart = createAction(
     '[Cart] Clear Cart'
+)
+
+export const updateProductQuantity = createAction(
+    '[Cart] Update Quantity',
+    props<{productId:number, qunatity:number}>()
 )

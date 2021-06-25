@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Address } from '@model/domain/address.model';
-import { PurchaseDTO } from '@model/dto/purchase.dto';
+import { OrderDTO } from '@model/dto/order.dto';
 import { Store } from '@ngrx/store';
-import { PurchaseService } from '@service/purchase/purchase.service';
+import { OrderService } from '@service/orders/orders.service';
 import { UserService } from '@service/user/user.service';
-import { cartId, username } from 'config/http.config';
+import { userId, username } from 'config/http.config';
 import { AddressViewerComponent } from './dialogs/address-viewer/address-viewer.component';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 
@@ -15,6 +15,7 @@ import * as fromCartSelectors from '@store/cart/cart.selector'
 
 import * as fromTaskBarActions from '@store/taskbar/taskbar.actions'
 import * as fromTaskBarSelectors from '@store/taskbar/taskbar.selector'
+import { CartService } from '@service/cart/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -25,16 +26,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private purchaseService: PurchaseService,
+    private orderService: OrderService,
     private userService: UserService,
     private cartStore: Store<fromCartSelectors.CartFeature>,
+    private cartService: CartService,
     private taskBarStore: Store<fromTaskBarSelectors.TaskBarFeature>,
     public dialog: MatDialog,
   ) { }
 
   addresses: Address[];
-  purchase: PurchaseDTO = JSON.parse(localStorage.getItem("purchase"));
-  cartId: number = cartId
+  order: OrderDTO = JSON.parse(localStorage.getItem("order"));
   username: string = username
   paymentMethod: string;
   addressId: number;
@@ -43,7 +44,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   getAddress() {
     this.isLoading = true
     this.userService
-      .getAddressByUserUsername()
+      .getAddressByUserUserId()
       .subscribe(address => this.addresses = this.isAddressAvailable(address))
   }
 
@@ -84,15 +85,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   checkOut() {
     this.isLoading = true
     const address: Address = this.addresses.find(address => address.id === this.addressId)
-    let purchase: PurchaseDTO = { ...this.purchase };
-    purchase.address = address;
-    purchase.paymentMethod = this.paymentMethod
-    this.purchaseService.purchaseProductsFromCart(purchase).subscribe((transactionDetails) => {
+    let order: OrderDTO = { ...this.order };
+    order.address = address;
+    order.paymentMethod = this.paymentMethod
+    this.orderService.orderProductsFromCart(order).subscribe((transactionDetails) => {
+      console.log(transactionDetails)
       this.cartStore.dispatch(fromCartActions.clearCart())
       this.taskBarStore.dispatch(fromTaskBarActions.clearCart())
-      localStorage.setItem("transactionDetails", JSON.stringify(transactionDetails))
-      localStorage.removeItem("purchase")
-      this.router.navigate(['/payment', cartId])
+      this.cartService.clearCart().subscribe(res => res)
+      localStorage.setItem("transactionDetails", JSON.stringify({
+        price: order.totalPrice,
+        payment: order.paymentMethod,
+      }))
+      localStorage.removeItem("order")
+      this.router.navigate(['/payment', userId])
     })
   }
 

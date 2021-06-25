@@ -18,11 +18,15 @@ export class ReviewComponent {
     private commonService: CommonService
   ) { }
 
-  @Input() reviews: Review[];
-  @Input() totalReviews: number;
+  @Input() reviews: Review[] = [];
+  @Input() totalReviews: number = 0;
 
   averageRatings() {
     return this.commonService.getAverageRatings(this.reviews)
+  }
+
+  roundAverageRatings(){
+    return Math.round(this.averageRatings())
   }
 
   likeReview(reviewId: number) {

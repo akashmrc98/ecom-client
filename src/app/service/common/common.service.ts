@@ -25,7 +25,7 @@ export class CommonService {
     let averageRating: number = 0;
     reviews.forEach(review => averageRating += review.rating)
     averageRating /= reviews.length
-    return averageRating
+    return parseFloat(averageRating.toFixed(2));
   }
 
   updateCartBadge(count: number) {

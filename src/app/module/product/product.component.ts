@@ -9,6 +9,17 @@ import { ProductService } from '@service/product/product.service';
 import { WishlistService } from '@service/wishlist/wishlist.service';
 
 import { CommonService } from '@service/common/common.service';
+import { ProductList } from '@model/domain/ProductList.model';
+import { ReviewService } from '@service/review/review.service';
+import { Review } from '@model/domain/review.model';
+
+import * as fromCartStoreActions from '@store/cart/cart.actions'
+import * as fromWishListStoreActions from '@store/wishList/wishlist.actions'
+
+import * as fromCartStoreSelectors from '@store/cart/cart.selector'
+import * as fromWishListSelectors from '@store/wishList/wishlist.selector'
+
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +34,10 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private wishListService: WishlistService,
-    private commonService: CommonService
+    private reviewService: ReviewService,
+    private commonService: CommonService,
+    private cartStore: Store<fromCartStoreSelectors.CartFeature>,
+    private wishListStore: Store<fromWishListSelectors.WishListFeature>
   ) { }
 
   product: Product = {
@@ -47,6 +61,7 @@ export class ProductComponent implements OnInit {
   cartLength: number = 0;
   wishListLength: number = 0;
   isLoading: boolean = true;
+  reviews: Review[] = []
 
   ngOnInit(): void {
     this.isLoading = true
@@ -64,17 +79,33 @@ export class ProductComponent implements OnInit {
         this.image = 'data:image/jpeg;base64,' + product.images[0].content
         this.isLoading = false
       })
+
+    this.reviewService.getReviewsByProductId(this.id)
+      .subscribe(reviews => this.reviews = reviews)
   }
 
   getImage(id: number) {
     this.image = 'data:image/jpeg;base64,' + this.product.images[id].content
   }
 
-  addToCart(productId: number): void {
+
+  addToCart(productId): void {
+    const product: ProductList = {
+      brand: this.product.brand,
+      description: this.product.description,
+      id: this.product.id,
+      image: this.product.images[0].content,
+      price: this.product.price,
+      ratings: 0,
+      reviews: 0,
+      stock: 0,
+      quantity:1
+    }
     this.cartService
-      .addProductToCartByProductID(productId)
+      .addProductToCartByProductID(product)
       .subscribe(
         (next) => {
+          this.cartStore.dispatch(fromCartStoreActions.addProduct({ product: product }))
           this.commonService.updateCartBadge(1)
           this._snackBar.open("Product Added to Cart!", 'close', { duration: 5000 })
         },
@@ -85,10 +116,19 @@ export class ProductComponent implements OnInit {
   }
 
   addToWishList(productId: number): void {
+    const product: ProductList = {
+      brand: this.product.brand,
+      description: this.product.description,
+      id: this.product.id,
+      image: this.product.images[0].content,
+      price: this.product.price,
+      stock: this.product.stock,
+    }
     this.wishListService
-      .addProductToWishListByProductId(productId)
+      .addProductToWishListByProductId(product)
       .subscribe(
         (next) => {
+          this.wishListStore.dispatch(fromWishListStoreActions.addProduct({ product: product }))
           this.commonService.updateWishListBadge(1)
           this._snackBar.open("Product Added to WishList!", 'close', { duration: 5000 })
         },

@@ -1,6 +1,7 @@
 import { ProductList } from '@model/domain/ProductList.model';
 import { createReducer, on, Action } from '@ngrx/store';
-import { addProduct, cartProducts, clearCart, removeProduct } from './cart.actions';
+import * as Q from 'q';
+import { addProduct, cartProducts, clearCart, removeProduct, updateProductQuantity } from './cart.actions';
 
 export const key = "cart"
 
@@ -49,6 +50,15 @@ export const _cartReducer = createReducer(
             })
         ),
 );
+
+
+function updateProductQunatity (products:ProductList[], productId:number, quantity:number) :ProductList[] {
+        let updateProductList :ProductList[] = products;
+         updateProductList.map(product=>{
+                if(product.id === productId) product.stock === quantity
+        })
+        return updateProductList;
+}
 
 export function cartReducer(state: CartState, action: Action) {
     return _cartReducer(state, action)

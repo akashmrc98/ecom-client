@@ -16,13 +16,13 @@ export class ProductService {
   }
 
   getProducts(pageNo: number, pageSize: number, sortBy: string): Observable<ProductList[]> {
-    const params = `?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}`
+    const params = `/?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}`
     return this.http.get<ProductList[]>(PRODUCT_API + params).pipe(map(products => products), shareReplay())
   }
 
   getProductsSize(): Observable<number> {
-    const params = `/size`
-    return this.http.get<number>(PRODUCT_API + params).pipe(map(products => products), shareReplay())
+    const params = `/count`
+    return this.http.get<number>(PRODUCT_API + params).pipe(map(productsCount => productsCount), shareReplay())
   }
 
   getProduct(id: number): Observable<Product> {

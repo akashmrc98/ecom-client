@@ -3,10 +3,12 @@ export interface ProductList {
     brand: string
     price: number,
     description: string
-    stock: number
-    images: Blob,
-    reviews: number,
-    ratings: number,
+    stock: number,
+    image: Blob,
+    reviews?: number,
+    ratings?: number,
+    quantity?:number,
+    isReviewed?:boolean
 }
 
 

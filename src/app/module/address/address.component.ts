@@ -20,7 +20,7 @@ export class AddressComponent implements OnInit {
   addresses: Address[];
   getAddress() {
     this.userService
-      .getAddressByUserUsername()
+      .getAddressByUserUserId()
       .subscribe(addressData => {
         this.addresses = addressData
       })

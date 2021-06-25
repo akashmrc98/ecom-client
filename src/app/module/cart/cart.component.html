@@ -21,7 +21,7 @@
 
     <div *ngIf="price === 0 && noOfProducts === 0" class="cart">
 
-        <img src="../../../assets/message/undraw_empty_cart_co35.svg" class="box card">
+        <img src="../../../assets/message/undraw_empty_cart_co35.svg">
 
         <div class="bw-radius box shadow-m bw-radius-m">
             <h3>Cart is empty!</h3>
@@ -37,7 +37,7 @@
         <div class="products shadow-m card box bw-radius-sm">
             <div class="product">
                 <div class="image">
-                    <img [src]="product.images | imageViewer" (click)="goToProductPage(product.id)">
+                    <img [src]="product.image | imageViewer" (click)="goToProductPage(product.id)">
 
                     <div class="specs">
                         <div class="price"> {{product.price}} ₹ </div>
@@ -48,16 +48,16 @@
                     </div>
 
                     <div class="buttons-group">
-                        <button mat-mini-fab (click)="addQuantity(product.stock, i)" color="light">
+                        <button mat-mini-fab (click)="addQuantity(product.id, product.stock, i)" color="light">
                             <mat-icon>add</mat-icon>
                         </button>
                         <div class="counter bw-radius-sm">
                             {{productQuantityList[i]}}
                         </div>
-                        <button (click)="removeQuantity(i)" mat-mini-fab color="light">
+                        <button (click)="removeQuantity(product.id, i)" mat-mini-fab color="light">
                             <mat-icon>remove</mat-icon>
                         </button>
-                        <button (click)="removeProductFromCart(product.id, i)" mat-mini-fab color="warn">
+                        <button (click)="confirmDialog(product.id, i)" mat-mini-fab color="warn">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>

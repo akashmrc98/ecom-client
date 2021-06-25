@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Purchases } from '@model/domain/purchase.model';
 import { username } from 'config/http.config';
 
 @Component({
@@ -11,16 +10,11 @@ import { username } from 'config/http.config';
 export class PaymentComponent implements OnInit, OnDestroy {
 
   username: string = username
-  purchase: Purchases = {
-    address: null,
-    id: null,
-    paymentMethod: "",
-    products: null,
-    productsQuantityList: null,
-    purchasedAt: new Date(),
-    totalPrice: 0,
-    totalProducts: 0
+  orders: any = {
+    price: 0,
+    payment:""
   };
+  now:Date = new Date()
 
   isLoading: boolean = false
   constructor(private router: Router) { }
@@ -32,10 +26,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
       this.router.navigate(['/', 'products'])
 
     if (isPurchaseData !== null && isPurchaseData !== undefined)
-      this.purchase = isPurchaseData
+      this.orders = isPurchaseData
     this.isLoading = false
 
-    console.log(this.purchase)
+    console.log(this.orders)
+    this.isLoading = false
   }
 
   ngOnDestroy() {

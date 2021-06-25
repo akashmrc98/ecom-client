@@ -47,4 +47,4 @@
     </div>
 </div>
 
-<app-review [totalReviews]="product.reviews.length" [reviews]="product.reviews"></app-review>
+<app-review [totalReviews]="reviews.length || 0" [reviews]="reviews || []"></app-review>

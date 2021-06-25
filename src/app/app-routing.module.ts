@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -51,9 +50,9 @@ const routes: Routes = [
     loadChildren: () => import('./module/payment/payment.module').then(m => m.PaymentModule)
   },
   {
-    path: 'purchases/:username',
+    path: 'orders/:username',
     pathMatch: "full",
-    loadChildren: () => import('./module/purchases/purchases.module').then(m => m.PurchasesModule)
+    loadChildren: () => import('./module/orders/orders.module').then(m => m.OrdersModule)
   },
   {
     path: 'account/:username',

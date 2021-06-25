@@ -17,8 +17,9 @@
     <div class="info shadow-sm bw-radius-sm">
         <div>
             <h4>Purchase Details</h4>
-            <h3>Purchased on {{purchase.purchasedAt | date}}</h3>
-            <h3>Amount Paid {{ purchase.totalPrice }} ₹ </h3>
+            <h3>Purchased on {{ now | date}}</h3>
+            <h4>Amount Paid {{ orders.price }} ₹ </h4>
+            <h4>Payment Method {{ orders.payment }} </h4>
         </div>
         <div>
             <h4>We hope you enjoy the premium experience.

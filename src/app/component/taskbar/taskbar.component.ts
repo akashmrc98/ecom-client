@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { CartService } from '@service/cart/cart.service';
 import { AuthService } from '@service/auth/auth.service';
 import { WishlistService } from '@service/wishlist/wishlist.service';
-import { cartId, username, wishListId } from 'config/http.config';
+import { username, userId } from 'config/http.config';
 
 import { select, Store } from '@ngrx/store';
 import { TaskBarFeature, noOfProductsInCart, noOfProductsInWishList, noOfProductsInCartUpdated, noOfProductsInWishListUpdated } from '@store/taskbar/taskbar.selector';
@@ -27,8 +27,7 @@ export class TaskbarComponent implements OnInit {
   myControl = new FormControl();
 
   username: string = username
-  cartId: number = cartId
-  wishListId: number = wishListId
+  userId: number = userId
 
   options: string[] = [];
   showNav: boolean = false;

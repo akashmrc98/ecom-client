@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReviewDTO } from '@model/dto/review.dto';
-import { PurchasesComponent } from '@module/purchases/purchases.component';
+import { OrdersComponent } from '@module/orders/orders.component';
 import { ReviewService } from '@service/review/review.service';
 import { username } from 'config/http.config';
 
@@ -14,8 +14,8 @@ import { username } from 'config/http.config';
 export class ReviewCreatorComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<PurchasesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { productId: number, close: boolean, confrim: boolean },
+    public dialogRef: MatDialogRef<OrdersComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { productId: number, close: boolean, confrim: boolean, orderId:number, index:number },
     private reviewService: ReviewService
   ) { }
 
@@ -51,10 +51,12 @@ export class ReviewCreatorComponent {
       ...this.reviewForm.value,
       username: this.username,
       rating: this.ratings,
-      productId: this.data.productId
+      productId: this.data.productId,
     }
 
-    this.reviewService.saveReview(this.reviewDto)
+    console.log(this.reviewDto)
+
+    this.reviewService.saveReview(this.reviewDto, this.data.orderId, this.data.index)
       .subscribe(
         (next) => {
           this.reviewForm.reset()

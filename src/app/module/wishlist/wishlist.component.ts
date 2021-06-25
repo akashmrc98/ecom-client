@@ -77,7 +77,7 @@ export class WishlistComponent implements OnInit {
   moveProductToCart(productId: number, index: number) {
     const product: ProductList = this.commonService.getProductById(productId, this.products)
     this.cartService
-      .addProductToCartByProductID(productId)
+      .addProductToCartByProductID(product)
       .subscribe(() => {
         this.removeProductFromWishList(productId, index)
         this.commonService.updateCartBadge(1)
@@ -85,8 +85,6 @@ export class WishlistComponent implements OnInit {
         this._snackBar.open("Product moved to cart!", 'close')
       })
   }
-
-
 
   goToProductPage(productId: number) {
     this.commonService.viewProductPage(productId)

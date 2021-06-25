@@ -1,0 +1,14 @@
+<div mat-dialog-title>
+  <h4>Remove Product</h4>
+</div>
+<mat-dialog-content>
+  <p>
+    Removing the product will disable price alerts on this product.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>cancel</button>
+  <button mat-raised-button [mat-dialog-close]="true">
+    Yes, Remove
+  </button>
+</mat-dialog-actions>

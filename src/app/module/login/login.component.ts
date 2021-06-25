@@ -23,12 +23,10 @@ export class LoginComponent implements OnInit {
     const authData: AuthDTO = this.userLoginForm.value
     this.authService.login(authData)
       .subscribe(response => {
-        localStorage.setItem("id", response.id.toString())
         localStorage.setItem("username", response.username)
         localStorage.setItem("accessToken", response.accessToken)
         localStorage.setItem("refreshToken", response.refreshToken)
-        localStorage.setItem("cartId", response.cartId.toString())
-        localStorage.setItem("wishListId", response.wishListId.toString())
+        localStorage.setItem("userId", response.userId.toString())
         this.router.navigate(["products"])
       })
   }

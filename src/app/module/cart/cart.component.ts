@@ -3,16 +3,18 @@ import { Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { PurchaseDTO } from '@model/dto/purchase.dto';
+import { OrderDTO } from '@model/dto/order.dto';
 
 import { select, Store } from '@ngrx/store';
 import * as fromCartActions from '@store/cart/cart.actions';
 import * as fromCartSelectors from '@store/cart/cart.selector';
 
-import { cartId, username } from 'config/http.config';
+import { userId } from 'config/http.config';
 import { CommonService } from '@service/common/common.service';
 import { CartService } from '@service/cart/cart.service';
 import { ProductList } from '@model/domain/ProductList.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from './dialog/confirm/confirm.component';
 
 @Component({
   selector: 'app-cart',
@@ -34,8 +36,17 @@ export class CartComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private router: Router,
     private cartStore: Store<fromCartSelectors.CartFeature>,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private dialog: MatDialog
   ) { }
+
+  confirmDialog(productId:number, index:number) {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '100%',
+      data: { close: false, save: true }
+    });
+    dialogRef.afterClosed().subscribe(isCheckOut => this.confirmRemovingProduct(isCheckOut, productId, index));
+  }
 
   fromHttpServerGetProducts() {
     this.isLoading = true
@@ -52,7 +63,7 @@ export class CartComponent implements OnInit {
     this.cartStore
       .pipe(select(fromCartSelectors.products))
       .subscribe(products => this.products = products)
-    this.productQuantityList = this.cartService.getProductsListQuantityList(this.products.length, this.productQuantityList)
+    this.productQuantityList = this.cartService.getProductsListQuantityList(this.products)
     this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
     this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
   }
@@ -70,16 +81,20 @@ export class CartComponent implements OnInit {
       .subscribe(isLoaded => this.isProductsLoaded(isLoaded))
   }
 
-  addQuantity(stock: number, index: number) {
-    this.cartService.addUnitQuantity(this.productQuantityList, index, stock)
+  addQuantity(productId: number, stock: number, index: number) {
+    this.productQuantityList = this.cartService.addUnitQuantity(this.productQuantityList, productId, stock, index)
     this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
     this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
   }
 
-  removeQuantity(index: number) {
-    this.cartService.removeUnitQuantity(this.productQuantityList, index)
+  removeQuantity(productId: number, index: number) {
+    this.productQuantityList = this.cartService.removeUnitQuantity(this.productQuantityList, productId, index)
     this.noOfProducts = this.cartService.getTotalProducts(this.productQuantityList)
     this.price = this.cartService.calculateCartPrice(this.products, this.productQuantityList)
+  }
+
+  confirmRemovingProduct(selection:boolean, productId:number, index:number){
+    if(selection) this.removeProductFromCart(productId, index)
   }
 
   removeProductFromCart(productId: number, index: number) {
@@ -97,19 +112,18 @@ export class CartComponent implements OnInit {
 
   checkOut() {
     const productIdList: number[] = this.cartService.getProductIdList(this.products)
-    const purchase: PurchaseDTO = {
-      cartId: cartId,
-      username: username,
+    const order: OrderDTO = {
       totalProducts: this.noOfProducts,
       totalPrice: this.price,
       productsQuantityList: this.productQuantityList,
-      productsIdList: productIdList,
+      productIdsList: productIdList,
       address: null,
-      paymentMethod: ""
+      paymentMethod: "",
+      products:this.products,
     }
-    localStorage.setItem("purchase", JSON.stringify(purchase))
+    localStorage.setItem("order", JSON.stringify(order))
     this.cleanUp()
-    this.router.navigate(['/', 'checkout', cartId])
+    this.router.navigate(['/', 'checkout', userId])
   }
 
   cleanUp() {

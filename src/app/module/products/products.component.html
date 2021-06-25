@@ -6,13 +6,10 @@
     <div appScroller *ngFor="let product of products">
         <div class="product shadow-sm bw-radius-m">
 
-            <div *ngIf="product.reviews !== 0" class="ratings">
-                <app-rating [ratings]="product.ratings"></app-rating>
-                <div class="stat">( {{product.reviews}} reviews )</div>
-            </div>
+            <app-rating [ratings]="product.ratings"></app-rating>
 
             <div class="product-image" (click)="goToProductPage(product.id)">
-                <img [src]="product.images | imageViewer">
+                <img [src]="product.image | imageViewer">
             </div>
 
             <div class="cta-buttons">
@@ -36,6 +33,7 @@
                 </div>
                 <div class="description"> {{product.description.substr(0, 120) }}...</div>
             </div>
+
         </div>
     </div>
 </div>

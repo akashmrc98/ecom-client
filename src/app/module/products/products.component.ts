@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
     private cartStore: Store<fromCartStoreSelectors.CartFeature>,
     private wishListStore: Store<fromWishListSelectors.WishListFeature>,
     private commonService: CommonService,
-    private productStore: Store<fromProductSelectors.ProductFeature>
+    private productStore: Store<fromProductSelectors.ProductFeature>,
   ) { }
 
   products: ProductList[] = []
@@ -66,25 +66,35 @@ export class ProductsComponent implements OnInit {
     this.isLoading = false
   }
 
+
   addProductToCart(productId: number): void {
-    const product: ProductList = this.commonService.getProductById(productId, this.products)
-    this.cartService.addProductToCartByProductID(productId).subscribe(
+    let product: ProductList = this.commonService.getProductById(productId, this.products)
+    product = {
+      ...product,
+      quantity: 1
+    }
+    this.cartService.addProductToCartByProductID(product).subscribe(
       (next) => {
         this.cartStore.dispatch(fromCartStoreActions.addProduct({ product: product }))
         this.commonService.updateCartBadge(1)
         this._snackBar.open("Product Added to Cart!", 'close', { duration: 5000 })
       },
       (error) => {
+        console.log(error)
         this._snackBar.open("Product Already in Cart!", 'close', { duration: 5000 })
       })
   }
 
   addProductToWishList(productId: number): void {
-    const product: ProductList = this.commonService.getProductById(productId, this.products)
-    this.wishListService.addProductToWishListByProductId(productId).subscribe(
+    let product: ProductList = this.commonService.getProductById(productId, this.products)
+    product = {
+      ...product,
+      quantity: 1
+    }
+    this.wishListService.addProductToWishListByProductId(product).subscribe(
       (next) => {
-        this.commonService.updateWishListBadge(1)
         this.wishListStore.dispatch(fromWishListStoreActions.addProduct({ product: product }))
+        this.commonService.updateWishListBadge(1)
         this._snackBar.open("Product Added to WishList!", 'close', { duration: 5000 })
       },
       (error) => {

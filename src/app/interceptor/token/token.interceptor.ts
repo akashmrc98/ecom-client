@@ -1,5 +1,6 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SESSION_API } from 'config/http.config';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,12 +10,17 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor() { }
 
+  accessToken: string = localStorage.getItem("accessToken");
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (localStorage.getItem("accessToken")) {
-      const token = request.clone({ setHeaders: { Authorization: localStorage.getItem("accessToken") } })
-      return next.handle(token)
-    }
-    return next.handle(request);
+      const modifiedRequest = request.clone({
+        setHeaders: {
+          Authorization: this.accessToken
+        }
+      })
+      return next.handle(modifiedRequest)
   }
+
+
 }
+

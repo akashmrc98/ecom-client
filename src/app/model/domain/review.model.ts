@@ -1,11 +1,11 @@
 export interface Review {
-    productId: number,
-    id: number,
+    productId?: number,
+    reviewId: number,
     username: string,
     headLine: string,
     description: string
     rating: number,
     reviewedOn: Date,
-    useFul: number,
+    favourites: number[],
     isReviewed: boolean,
 }
